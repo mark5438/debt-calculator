@@ -6,6 +6,7 @@
 - 🟢 Store debt in a json file
 - 🟠 Calculate remaining debt amount from the moment of entry
 - 🟠 Calculate remaining installments from the moment of entry
+- 🟠 Activate CI
 - 🔵 deprecate json file storage and migrate into a database storage with consistent storage
 - 🔵 containerise the whole project 
 - 🔵 Expand README with how to run 
