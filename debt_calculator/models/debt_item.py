@@ -9,5 +9,6 @@ class DebtItem(BaseModel):
     number_of_installments: int
     installment_amount: float
     start_date: datetime
+    end_date: datetime = None
     remaining_installments: int = None
     remaining_amount: float = None

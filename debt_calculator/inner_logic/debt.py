@@ -1,4 +1,6 @@
-from datetime import datetime
+from datetime import datetime, date
+
+from dateutil.relativedelta import relativedelta
 
 from debt_calculator.inner_logic.error_messages import ErrorMessages
 from debt_calculator.models.debt_item import DebtItem
@@ -29,9 +31,32 @@ class Debt:
         Debt.is_debt_installment_calculation_valid(debt_item)
 
         # Aggregate & calculate the missing debt info
+        elapsed_month = Debt.calculate_elapsed_month(debt_item)
+        debt_item.remaining_installments = Debt.calculate_remaining_installments(debt_item, elapsed_month)
+        debt_item.remaining_amount = Debt.calculate_remaining_amount(debt_item, elapsed_month)
+        debt_item.end_date = Debt.calculate_end_date(debt_item)
 
-        # Add item to csv file
+        # Add item to json file
         Debt.add_item_to_debt_store(debt_item, self.store_file_path)
+
+    @staticmethod
+    def calculate_elapsed_month(debt: DebtItem) -> int:
+        current_date = date.today()
+        start_date = debt.start_date
+        return ((current_date.year - start_date.year) * 12) + (current_date.month - start_date.month)
+
+    @staticmethod
+    def calculate_remaining_installments(debt: DebtItem, elapsed_number_of_month: int) -> int:
+        return debt.number_of_installments - elapsed_number_of_month
+
+    @staticmethod
+    def calculate_remaining_amount(debt: DebtItem, elapsed_number_of_month: int) -> float:
+        payment_so_far = elapsed_number_of_month * debt.installment_amount
+        return debt.total_amount - payment_so_far
+
+    @staticmethod
+    def calculate_end_date(debt: DebtItem) -> datetime:
+        return debt.start_date + relativedelta(months=+debt.number_of_installments)
 
     @staticmethod
     def is_debt_installment_calculation_valid(item):
