@@ -6,7 +6,9 @@
 - 🟢 Store debt in a json file
 - 🟠 Calculate remaining debt amount from the moment of entry
 - 🟠 Calculate remaining installments from the moment of entry
-- 🔵 deprecate json file storage and migrate into a database storage
+- 🔵 deprecate json file storage and migrate into a database storage with consistent storage
+- 🔵 containerise the whole project 
+- 🔵 Expand README with how to run 
 - 🔵 Graph for total debt amount with each contributor based on how much is remaining
 - 🔵 Bar/Line chart for projected 6 month of payments 
 
