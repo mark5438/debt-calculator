@@ -1,4 +1,14 @@
 
+# How to run
+```shell
+poetry shell # only if the virtual environment is not active
+poetry run debt_calculator/main.py
+```
+# How to run tests
+```shell
+poetry shell # only if the virtual environment is not active 
+poetry run pytest
+```
 
 # Planned features roadmap
 - 🟢 Collect debt data from user (item name, Amount to pay, # of installments and start date)
@@ -8,9 +18,9 @@
 - 🟢 Calculate remaining installments from the moment of entry
 - 🟠 Add tests
 - 🟠 Activate CI
+- 🟠 Expand README with how to run 
 - 🔵 deprecate json file storage and migrate into a database storage with consistent storage
 - 🔵 containerise the whole project 
-- 🔵 Expand README with how to run 
 - 🔵 Graph for total debt amount with each contributor based on how much is remaining
 - 🔵 Bar/Line chart for projected 6 month of payments 
 
