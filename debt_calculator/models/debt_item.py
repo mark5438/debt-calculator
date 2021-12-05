@@ -12,3 +12,7 @@ class DebtItem(BaseModel):
     end_date: datetime = None
     remaining_installments: int = None
     remaining_amount: float = None
+
+
+class DebtItems(BaseModel):
+    items: list[DebtItem]
