@@ -1,16 +1,14 @@
-import json
 from datetime import datetime, date
 
 from dateutil.relativedelta import relativedelta
 
 from debt_calculator.inner_logic.error_messages import ErrorMessages
-from debt_calculator.inner_logic.plot import Plot
 from debt_calculator.models.debt_item import DebtItem, DebtItems
+from debt_calculator.service.data_store import DataStore
+from debt_calculator.service.plot import Plot
 
 
 class Debt:
-    # STORE_FILE_PATH = 'book_keeping/debt_store.json'
-    STORE_FILE_PATH = '/Users/ahamouda/study_projects/debt-calculator/book_keeping/debt_store.json'
 
     @staticmethod
     def get_debt_start_time():
@@ -38,7 +36,7 @@ class Debt:
         debt_item.end_date = Debt.calculate_end_date(debt_item)
 
         # Add item to json file
-        Debt.add_item_to_debt_store(debt_item, self.STORE_FILE_PATH)
+        DataStore.add_item_to_debt_store(debt_item)
 
     @staticmethod
     def calculate_elapsed_month(debt: DebtItem) -> int:
@@ -65,12 +63,6 @@ class Debt:
             return True
         else:
             raise ValueError(ErrorMessages.INVALID_INSTALLMENT.value)
-
-    @staticmethod
-    def add_item_to_debt_store(debt_item, store_file_path) -> None:
-        # TODO: update when changing to database
-        with open(store_file_path, 'a') as debt_store:
-            debt_store.write(f"{debt_item.json()}\n")
 
     def plot_debt_over_all_period(self):
         # Get items from source
@@ -101,15 +93,4 @@ class Debt:
         return DebtItems(items=updated_items)
 
     def get_debt_items(self) -> DebtItems:
-        return DebtItems(items=self.get_items_from_debt_store(self.STORE_FILE_PATH))
-
-    @staticmethod
-    def get_items_from_debt_store(store_file_path) -> list:
-        # TODO: update when changing to database
-        with open(store_file_path, 'r') as debt_store:
-            debt_items = []
-            # clean the input
-            for item in debt_store.readlines():
-                debt_items.append(json.loads(item))
-            return debt_items
-
+        return DebtItems(items=DataStore.get_items_from_debt_store())

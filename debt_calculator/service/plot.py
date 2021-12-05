@@ -9,13 +9,11 @@ COLORS = ["#9b59b6", "#e74c3c", "#34495e", "#2ecc71", "#D0D1E6", "#A6BDDB", "#74
 BACKGROUND_GREY88 = "#e0e0e0"
 
 
-
 class Plot:
     def __init__(self):
         self.plot_tool = pyplot
 
     def plot_a_stackplot(self, x_axis: Union[list, range], y_axis: list, labels: list[str]) -> None:
-
         # Make length the same
         self.edit_and_unify_y_axis_length(y_axis)
 
